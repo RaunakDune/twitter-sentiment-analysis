@@ -2,8 +2,8 @@ import utils
 
 # Classifies a tweet based on the number of positive and negative words in it
 
-TRAIN_PROCESSED_FILE = 'train-processed.csv'
-TEST_PROCESSED_FILE = 'test-processed.csv'
+TRAIN_PROCESSED_FILE = r'D:\Code\twitter-sentiment-analysis\dataset\training_India-processed.csv'
+TEST_PROCESSED_FILE = r'D:\Code\twitter-sentiment-analysis\dataset\testing_India-processed.csv'
 POSITIVE_WORDS_FILE = '../dataset/positive-words.txt'
 NEGATIVE_WORDS_FILE = '../dataset/negative-words.txt'
 TRAIN = True
@@ -13,7 +13,7 @@ def classify(processed_csv, test_file=True, **params):
     positive_words = utils.file_to_wordset(params.pop('positive_words'))
     negative_words = utils.file_to_wordset(params.pop('negative_words'))
     predictions = []
-    with open(processed_csv, 'r') as csv:
+    with open(processed_csv, 'r', encoding="utf8") as csv:
         for line in csv:
             if test_file:
                 tweet_id, tweet = line.strip().split(',')
@@ -38,7 +38,7 @@ if __name__ == '__main__':
     if TRAIN:
         predictions = classify(TRAIN_PROCESSED_FILE, test_file=(not TRAIN), positive_words=POSITIVE_WORDS_FILE, negative_words=NEGATIVE_WORDS_FILE)
         correct = sum([1 for p in predictions if p[1] == p[2]]) * 100.0 / len(predictions)
-        print 'Correct = %.2f%%' % correct
+        print ('Correct = %.2f%%' % correct)
     else:
         predictions = classify(TEST_PROCESSED_FILE, test_file=(not TRAIN), positive_words=POSITIVE_WORDS_FILE, negative_words=NEGATIVE_WORDS_FILE)
         utils.save_results_to_csv(predictions, 'baseline.csv')
