@@ -68,11 +68,12 @@ def preprocess_tweet(tweet):
     return ' '.join(processed_tweet)
 
 
-def preprocess_csv(csv_file_name, processed_file_name, test_file=True):
+def preprocess_csv(csv_file_name, processed_file_name, test_file=False):
     save_to_file = open(processed_file_name, 'w', encoding="utf8")
     positive = 0
+    test_file=False
 
-    with open(csv_file_name, 'r', encoding="utf8") as csv:
+    with open(csv_file_name, 'r', encoding="utf8", errors="ignore") as csv:
         lines = csv.readlines()
         total = len(lines)
         for i, line in enumerate(lines):

@@ -21,7 +21,7 @@ def write_status(i, total):
 
 def save_results_to_csv(results, csv_file):
     ''' Save list of type [(tweet_id, positive)] to csv in Kaggle format '''
-    with open(csv_file, 'w') as csv:
+    with open(csv_file, 'w', encoding="utf8") as csv:
         csv.write('id,prediction\n')
         for tweet_id, pred in results:
             csv.write(tweet_id)
